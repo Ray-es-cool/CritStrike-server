@@ -149,7 +149,7 @@ font-size:36px;
 <div class="container">
 
 <div class="nav">
-<div class="nav-left"></div>
+<div></div>
 
 <div class="nav-center">
 <a href="index.html">Home</a>
@@ -160,7 +160,7 @@ font-size:36px;
 <a href="login.html">Login</a>
 </div>
 
-<div class="nav-right">
+<div>
 <div class="user-box" id="userBox"></div>
 </div>
 </div>
@@ -197,6 +197,7 @@ Don't have an account? Register
 
 let isLogin = true;
 
+/* SWITCH */
 function toggleMode(){
 
 isLogin = !isLogin;
@@ -214,6 +215,7 @@ isLogin
 
 }
 
+/* SUBMIT */
 async function submit(){
 
 let user = document.getElementById("username").value;
@@ -235,18 +237,25 @@ headers: { "Content-Type": "application/json" },
 body: JSON.stringify({ username: user, password: pass })
 });
 
-const result = await response.json();
+let result;
 
-if(result.success){
+try {
+result = await response.json();
+} catch {
+msg.innerText = "Server error";
+return;
+}
+
+if(response.ok && result.success){
 localStorage.setItem("currentUser", user);
 localStorage.setItem(user + "_tokens", result.tokens || 0);
 location.reload();
 } else {
-msg.innerText = result.error || "Invalid login";
+msg.innerText = result?.error || "Invalid login";
 }
 
 } catch(err){
-msg.innerText = "Connection error.";
+msg.innerText = "Cannot connect (Render may be sleeping)";
 console.error(err);
 }
 
@@ -266,22 +275,40 @@ pfp: "https://via.placeholder.com/40"
 })
 });
 
-const result = await response.json();
+let result;
 
-if(result.success){
+try {
+result = await response.json();
+} catch {
+msg.innerText = "Server error";
+return;
+}
+
+if(response.ok && result.success){
 msg.innerText = "Account created! Now login.";
 toggleMode();
 } else {
-msg.innerText = result.error || "Registration failed";
+msg.innerText = result?.error || "Registration failed";
 }
 
 } catch(err){
-msg.innerText = "Connection error.";
+msg.innerText = "Cannot connect (Render may be sleeping)";
 console.error(err);
 }
 
 }
 
+}
+
+/* LOGOUT */
+function logout(){
+localStorage.removeItem("currentUser");
+location.reload();
+}
+
+/* SHOW LOGOUT IF LOGGED IN */
+if(localStorage.getItem("currentUser")){
+document.getElementById("logoutBtn").style.display = "block";
 }
 
 </script>

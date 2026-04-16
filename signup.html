@@ -213,7 +213,7 @@ function logout(){
   location.reload();
 }
 
-/* FIXED FILE TO BASE64 */
+/* FILE → BASE64 */
 function fileToAvatarDataUrl(file, done){
   let reader = new FileReader();
   reader.onload = function(e){
@@ -238,6 +238,7 @@ function fileToAvatarDataUrl(file, done){
   reader.readAsDataURL(file);
 }
 
+/* SIGNUP */
 function signup(){
 
   let u = document.getElementById("username").value;
@@ -259,7 +260,7 @@ function signup(){
   }
 }
 
-/* FIXED: NO LOCALHOST */
+/* FINAL FIXED VERSION */
 async function finishSignup(username, password, pfp){
 
   try {
@@ -269,24 +270,33 @@ async function finishSignup(username, password, pfp){
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username,
-        password,
-        pfp
+        username: username,
+        password: password,
+        pfp: pfp
       })
     });
 
-    const result = await response.json();
+    let result;
 
-    if(result.success){
+    try {
+      result = await response.json();
+    } catch {
+      document.getElementById("msg").innerText = "Server error (invalid response)";
+      return;
+    }
+
+    if(response.ok && result.success){
       localStorage.setItem("currentUser", username);
       localStorage.setItem(username + "_tokens", 0);
       location.href = "index.html";
     } else {
-      document.getElementById("msg").innerText = result.error || "Signup failed";
+      document.getElementById("msg").innerText =
+        result?.error || "Signup failed";
     }
 
   } catch(err){
-    document.getElementById("msg").innerText = "Server connection failed.";
+    document.getElementById("msg").innerText =
+      "Cannot connect to server (Render may be sleeping)";
     console.error(err);
   }
 }
