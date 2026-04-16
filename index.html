@@ -315,8 +315,8 @@ function apply(d){
    ADMIN SAVE (SERVER API)
 ========================= */
 async function save(){
-    if(currentUser!=="CritStrike") {
-        alert("Only CritStrike can edit site settings");
+    if(currentUser!=="Game_Master") {
+        alert("Only Game_Master can edit site settings");
         return;
     }
 
@@ -336,13 +336,13 @@ async function save(){
     }
 
     try {
-        const response = await fetch("http://localhost:3000/api/site", {
+        const response = await fetch("/api/site", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                user: "CritStrike",
+                user: "Game_Master",
                 title: title,
                 logo: logo || document.getElementById("logoImg").src,
                 updates: updates,
