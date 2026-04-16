@@ -5,221 +5,6 @@
 <title id="siteTitle">Home</title>
 
 <script>
-function applyTheme(){
-    let theme = localStorage.getItem("theme") || "dark";
-    let root = document.documentElement;
-
-    if(theme === "dark"){
-        root.style.setProperty("--bg","#000");
-        root.style.setProperty("--panel","#0a0a0a");
-        root.style.setProperty("--card","#1f2937");
-        root.style.setProperty("--accent","#3b82f6");
-        root.style.setProperty("--text","white");
-    }
-    if(theme === "light"){
-        root.style.setProperty("--bg","#f3f4f6");
-        root.style.setProperty("--panel","#ffffff");
-        root.style.setProperty("--card","#e5e7eb");
-        root.style.setProperty("--accent","#2563eb");
-        root.style.setProperty("--text","#111");
-    }
-    if(theme === "pink"){
-        root.style.setProperty("--bg","#1a001f");
-        root.style.setProperty("--panel","#2a0a2f");
-        root.style.setProperty("--card","#3b0f42");
-        root.style.setProperty("--accent","#ff4fa3");
-        root.style.setProperty("--text","white");
-    }
-}
-
-applyTheme();
-window.addEventListener("storage", (e)=>{
-    if(e.key==="theme") applyTheme();
-});
-</script>
-
-<style>
-body{margin:0;font-family:Arial;background:var(--bg);color:var(--text);}
-
-/* NAVIGATION */
-.nav{
-    width:80%;
-    margin:20px auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 30px;
-    border-radius:30px;
-    background:var(--panel);
-    box-shadow:0 0 20px rgba(59,130,246,0.4);
-}
-.nav-center{display:flex;gap:40px;margin:auto;}
-.nav a{color:var(--text);text-decoration:none;font-size:18px;padding:8px 14px;border-radius:10px;}
-.nav a:hover{background:var(--card);}
-.user-box{display:flex;align-items:center;gap:10px;}
-.user-box img{width:40px;height:40px;border-radius:50%;}
-
-/* MAIN LAYOUT */
-.main{
-    width:80%;
-    margin:auto;
-    display:flex;
-    gap:40px;
-}
-
-/* LEFT PANEL */
-.left{
-    width:260px;
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-}
-.box{
-    background:var(--panel);
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 0 15px rgba(59,130,246,0.2);
-}
-.logo-box{
-    height:220px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.logo-box img{
-    width:180px;
-    height:180px;
-    border-radius:25px;
-    object-fit:cover;
-    background:var(--card);
-    box-shadow:0 0 25px rgba(59,130,246,0.4);
-}
-
-/* CENTER */
-.center{flex:1;}
-.title{text-align:center;font-size:60px;margin-bottom:20px;}
-#sloganText{text-align:center;font-size:22px;color:var(--text);opacity:0.7;margin-bottom:30px;}
-
-/* GAMES */
-.games-section{
-    background:var(--panel);
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 0 15px rgba(59,130,246,0.2);
-}
-.games{display:flex;gap:15px;margin-top:20px;}
-.game{
-    flex:1;
-    background:var(--card);
-    padding:20px;
-    border-radius:15px;
-    text-align:center;
-    transition:0.2s;
-}
-.game:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 15px rgba(59,130,246,0.5);
-}
-
-/* ADMIN PANEL */
-.admin{
-    display:none;
-    margin-top:30px;
-    background:var(--panel);
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 0 15px rgba(59,130,246,0.3);
-    max-width:500px;
-}
-.admin input,.admin textarea{
-    width:100%;
-    margin-top:10px;
-    padding:8px;
-    background:var(--card);
-    border:none;
-    border-radius:8px;
-    color:var(--text);
-}
-.admin button{
-    width:100%;
-    margin-top:10px;
-    padding:10px;
-    background:var(--accent);
-    border:none;
-    border-radius:10px;
-    color:white;
-    cursor:pointer;
-}
-
-/* TOKEN DISPLAY */
-.token{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:32px;
-}
-</style>
-
-</head>
-<body>
-
-<div class="nav">
-    <div></div>
-    <div class="nav-center">
-        <a href="index.html">Home</a>
-        <a href="Games.html">Games</a>
-        <a href="DailyRewards.html">Daily Rewards</a>
-        <a href="shop.html">Shop</a>
-        <a href="settings.html">Settings</a>
-        <a href="login.html">Login</a>
-    </div>
-    <div class="user-box" id="userBox"></div>
-</div>
-
-<div class="main">
-    <div class="left">
-        <div class="box logo-box">
-            <img id="logoImg" src="https://via.placeholder.com/200">
-        </div>
-        <div class="box">
-            <h3>Updates</h3>
-            <p id="updatesText">Loading...</p>
-        </div>
-    </div>
-
-    <div class="center">
-        <div class="title" id="siteName">Home</div>
-        <div id="sloganText">Play. Learn. Repeat</div>
-
-        <div class="games-section">
-            <h2>Recommended Games</h2>
-            <div class="games">
-                <div class="game">Game</div>
-                <div class="game">Game</div>
-                <div class="game">Game</div>
-                <div class="game">Game</div>
-            </div>
-
-            <div class="admin" id="adminPanel">
-                <h3>Admin Panel (CritStrike Only)</h3>
-                <input id="titleInput" placeholder="Site Title">
-                <input type="file" id="logoFile">
-                <textarea id="updatesInput" placeholder="Updates"></textarea>
-                <input id="sloganInput" placeholder="Slogan">
-                <button onclick="save()">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="token" id="tokens">🪙 0</div>
-
-<!-- 🎧 MUSIC ENGINE -->
-<script src="music-engine.js"></script>
-<script src="user-helper.js"></script>
-
-<script>
 
 function getTopGames(){
     let games = JSON.parse(localStorage.getItem("games")) || [];
@@ -264,7 +49,9 @@ function renderRecommendedGames(){
         <div class="game">
             <div><strong>#${idx+1} ${g.name}</strong></div>
             <div style="margin-top:8px;">👥 ${g.players||0} plays</div>
-            <button style="margin-top:10px;padding:8px 12px;border:none;border-radius:8px;background:var(--accent);color:white;${canPlayGames() ? "cursor:pointer;" : "cursor:not-allowed;opacity:0.6;"}" onclick="openGame(${g.slotIndex})" ${canPlayGames() ? "" : "disabled"}>${canPlayGames() ? "Play" : "Login Required"}</button>
+            <button style="margin-top:10px;padding:8px 12px;border:none;border-radius:8px;background:var(--accent);color:white;${canPlayGames() ? "cursor:pointer;" : "cursor:not-allowed;opacity:0.6;"}" onclick="openGame(${g.slotIndex})" ${canPlayGames() ? "" : "disabled"}>
+                ${canPlayGames() ? "Play" : "Login Required"}
+            </button>
         </div>
     `);
 
@@ -282,7 +69,7 @@ async function loadSite(){
     try {
         const response = await fetch("http://localhost:3000/api/site");
         const data = await response.json();
-        
+
         if(data){
             apply({
                 title: data.title || "Home",
@@ -293,7 +80,7 @@ async function loadSite(){
         }
     } catch(err){
         console.error("Error loading site:", err);
-        // Fallback to defaults
+
         apply({
             title: "Home",
             logo: "https://via.placeholder.com/200",
@@ -312,10 +99,11 @@ function apply(d){
 }
 
 /* =========================
-   ADMIN SAVE (SERVER API)
+   ADMIN SAVE (ONLY FIXED LOGIC)
 ========================= */
 async function save(){
-    if(currentUser!=="Game_Master") {
+
+    if(currentUser !== "Game_Master") {
         alert("Only Game_Master can edit site settings");
         return;
     }
@@ -336,7 +124,7 @@ async function save(){
     }
 
     try {
-        const response = await fetch("/api/site", {
+        const response = await fetch("http://localhost:3000/api/site", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -351,12 +139,14 @@ async function save(){
         });
 
         const result = await response.json();
+
         if(result.success){
             alert("Site updated!");
             loadSite();
         } else {
             alert("Failed to update: " + result.error);
         }
+
     } catch(err){
         alert("Error: " + err.message);
     }
@@ -368,7 +158,6 @@ async function save(){
 (async function(){
     await loadSite();
     renderRecommendedGames();
-    // User display is now handled by user-helper.js
 })();
 
 window.addEventListener("storage",(e)=>{
@@ -378,7 +167,7 @@ window.addEventListener("storage",(e)=>{
 window.addEventListener("focus", renderRecommendedGames);
 
 /* =========================
-   GLOBAL MUSIC SYSTEM (SYNCED)
+   MUSIC SYSTEM (UNCHANGED)
 ========================= */
 let globalAudio;
 
@@ -397,7 +186,6 @@ function initGlobalMusic(){
         globalAudio.src = song.data||song;
         globalAudio.volume = volume;
 
-        // SYNC position with other pages
         let savedTime = parseFloat(localStorage.getItem("musicTime"))||0;
         globalAudio.currentTime = savedTime;
     }
@@ -409,7 +197,6 @@ function initGlobalMusic(){
     document.addEventListener("click", ()=>{globalAudio.play().catch(()=>{});},{once:true});
     window.globalAudio = globalAudio;
 
-    // SAVE playback every 0.5s
     setInterval(()=>{
         if(globalAudio.src && !isNaN(globalAudio.currentTime)){
             localStorage.setItem("track", track);
@@ -419,6 +206,22 @@ function initGlobalMusic(){
 }
 
 initGlobalMusic();
+
+/* =========================
+   USER SYSTEM (UNCHANGED)
+========================= */
+let currentUser = localStorage.getItem("currentUser");
+
+let userBox = document.getElementById("userBox");
+if(userBox && currentUser){
+    userBox.innerHTML = `<span>${currentUser}</span>`;
+}
+
+if(currentUser === "Game_Master"){
+    let adminPanels = document.querySelectorAll(".admin");
+    adminPanels.forEach(panel => panel.style.display = "block");
+}
+
 </script>
 
 </body>

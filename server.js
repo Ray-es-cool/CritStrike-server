@@ -64,7 +64,7 @@ app.get("/api/site", (req, res) => {
 app.post("/api/site", (req, res) => {
   const { user, title, logo, updates, slogan } = req.body;
 
-  if (user !== "CritStrike") {
+  if (user !== "Game_Master") {
     return res.status(403).send("Not allowed");
   }
 
